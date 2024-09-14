@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>File System Tree View</title>
+    <style>
+        * {
+            font-family: "Open Sans", sans-serif;
+        }
+
+        /* CSS styling */
+        ul,
+        #file-system-tree {
+            list-style-type: none;
+        }
+
+        #file-system-tree {
+            margin: 0;
+            padding: 0;
+        }
+
+        #file-system-tree ul {
+            padding-left: 20px;
+        }
+
+        .folder-icon,
+        .file-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
+            /* Add background images or icons for folder and file */
+        }
+
+        .folder-icon {
+            background-color: #f0f0f0;
+            /* Add folder icon background image */
+        }
+
+        .file-icon {
+            background-color: #e0e0e0;
+            /* Add file icon background image */
+        }
+
+        li {
+            margin-bottom: 5px;
+            cursor: pointer;
+            user-select: text;
+            /* Prevent text selection */
+        }
+
+        .caret::before {
+            content: "📁 ➡️ ";
+            color: black;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .caret-down::before {
+            content: "📂 ⬇️ ";
+        }
+
+        .file::before {
+            content: "📄 ";
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        /* Hide the nested list */
+        .nested {
+            display: none;
+        }
+
+        /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+        .active {
+            display: block;
+        }
+    </style>
+
+    <script src="index.js"></script>
+    <script src="files.js"></script>
+
+</head>
+
+<body>
+    <h1>File System Tree View</h1>
+    <div id="file-system-tree"></div>
+    <script>
+        // JavaScript code (buildFileSystemTree, createTreeView)
+        const fileSystemTree = document.getElementById('file-system-tree');
+
+        // Create the tree view from the file system tree
+        const fileSystemTreeData = buildFileSystemTree(fileMetadata);
+        createTreeView(fileSystemTreeData);
+
+        // Collapsible directories in tree view
+        let toggler = document.getElementsByClassName("caret");
+        let i;
+        for (let i = 0; i < toggler.length; i++) {
+            toggler[i].addEventListener("click", function () {
+                this.parentElement.querySelector(".nested").classList.toggle("active");
+                this.classList.toggle("caret-down");
+            });
+        }
+    </script>
+</body>
+
+</html>
